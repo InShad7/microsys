@@ -1,0 +1,56 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+    id "com.google.gms.google-services" 
+}
+
+android {
+    namespace = "com.example.microsys"
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId = "com.example.microsys"
+        minSdk = 23
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
+        multiDexEnabled = true 
+    }
+
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.debug
+        }
+    }
+}
+
+flutter {
+    source = "../.."
+}
+
+// // Add the Google Services JSON file path (to resolve issues with Firebase)
+// def localProperties = new Properties()
+// def localPropertiesFile = rootProject.file('local.properties')
+// if (localPropertiesFile.exists()) {
+//     localPropertiesFile.withReader('UTF-8') { reader -> localProperties.load(reader) }
+// }
+
+// def flutterRoot = localProperties.getProperty('flutter.sdk')
+// def googleServicesPath = localProperties.getProperty('google.services.path')
+// apply plugin: 'com.google.gms.google-services'
+
+// dependencies {
+//     implementation platform('com.google.firebase:firebase-bom:32.0.0') // Firebase BOM (Manages dependencies versions)
+//     implementation 'com.google.firebase:firebase-analytics' // Add Firebase Analytics
+// }
