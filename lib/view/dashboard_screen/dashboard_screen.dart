@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:microsys/controller/item_controller/item_controller.dart';
 import 'package:microsys/view/add_product_screen/widget/custom_drop_down.dart';
 import 'package:microsys/view/utils/colors.dart';
+import 'package:microsys/view/utils/constants.dart';
 import 'package:provider/provider.dart';
+import '../item_screen/widget/item_card.dart';
 import 'widget/chart.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -36,25 +38,49 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Column(
             children: [
               const CategoryDropdown(),
-              const Spacer(),
+              kHeight20,
               CategoryChart(
                 items: provider.itemList,
                 selectedCategory: provider.selectedCategory,
               ),
               if (provider.selectedCategory != '')
-                const Column(
+                Column(
                   children: [
-                    Text(
+                    kHeight20,
+                    const Text(
                       'X axis: Units',
                       style: TextStyle(color: grey),
                     ),
-                    Text(
+                    const Text(
                       'Y axis: Price',
                       style: TextStyle(color: grey),
                     ),
+                    kHeight30,
+                    SizedBox(
+                      height: width * 0.65,
+                      child: Builder(
+                        builder: (context) {
+                          final filteredList = provider.itemList
+                              .where((item) =>
+                                  item.category == provider.selectedCategory)
+                              .toList();
+
+                          return ListView.builder(
+                            itemCount: filteredList.length,
+                            itemBuilder: (context, index) {
+                              final item = filteredList[index];
+                              return ItemCard(
+                                isDashboard: true,
+                                item: item,
+                                width: width,
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
                   ],
                 ),
-              const Spacer(),
             ],
           ),
         ),

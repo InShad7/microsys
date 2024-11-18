@@ -9,23 +9,27 @@ class ItemCard extends StatelessWidget {
     super.key,
     required this.item,
     required this.width,
+    this.isDashboard = false,
   });
 
   final ItemModel item;
   final double width;
+  final bool isDashboard;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          CupertinoPageRoute(
-            builder: (context) => ItemDetailsScreen(
-              item: item,
-            ),
-          ),
-        );
+        isDashboard
+            ? null
+            : Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => ItemDetailsScreen(
+                    item: item,
+                  ),
+                ),
+              );
       },
       child: Container(
         margin: EdgeInsets.symmetric(
@@ -43,7 +47,7 @@ class ItemCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           subtitle: Text(
-            item.description,
+            isDashboard ? "Unit:  ${item.unit}" : item.description,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
